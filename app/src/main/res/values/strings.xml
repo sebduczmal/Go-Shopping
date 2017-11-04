@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Go Shopping</string>
+    <string name="loading">Loading shopping lists</string>
 </resources>
