@@ -9,10 +9,15 @@ import java.util.List;
 
 public class CurrentListPresenter extends BasePresenter<CurrentListView> {
 
+    private final List<ShoppingList> shoppingLists;
+
+    public CurrentListPresenter() {
+        this.shoppingLists = new ArrayList<>();
+    }
+
     public void loadCurrentShoppingLists() {
         view().onLoadingShoppingListsStarted();
-        List<ShoppingList> shoppingLists = new ArrayList<>();
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 10; i++) {
             ShoppingList shoppingList = new ShoppingList(i, "AAAAAAA");
             shoppingLists.add(shoppingList);
         }
@@ -23,5 +28,10 @@ public class CurrentListPresenter extends BasePresenter<CurrentListView> {
     @Override
     protected Class viewClass() {
         return CurrentListView.class;
+    }
+
+    public void createShoppingList(String shoppingListName) {
+        shoppingLists.add(new ShoppingList(1, shoppingListName));
+        view().showCurrentShoppingLists(shoppingLists);
     }
 }

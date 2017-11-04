@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Go Shopping</string>
     <string name="loading">Loading shopping lists</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">Ok</string>
+    <string name="description_create_shopping_list">Name your new shopping list</string>
 </resources>

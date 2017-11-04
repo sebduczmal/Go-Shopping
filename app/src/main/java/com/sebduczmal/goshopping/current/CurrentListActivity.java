@@ -9,6 +9,8 @@ import com.sebduczmal.goshopping.BaseActivity;
 import com.sebduczmal.goshopping.R;
 import com.sebduczmal.goshopping.current.di.DaggerShoppingListComponent;
 import com.sebduczmal.goshopping.current.di.ShoppingListComponent;
+import com.sebduczmal.goshopping.current.dialog.CreateShoppingListDialog;
+import com.sebduczmal.goshopping.current.dialog.OnShoppingListCreateListener;
 import com.sebduczmal.goshopping.current.list.CurrentListAdapter;
 import com.sebduczmal.goshopping.current.list.OnShoppingListClickListener;
 import com.sebduczmal.goshopping.databinding.ActivityCurrentListBinding;
@@ -19,9 +21,11 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import timber.log.Timber;
+
 
 public class CurrentListActivity extends BaseActivity implements CurrentListView,
-        OnShoppingListClickListener {
+        OnShoppingListClickListener, OnShoppingListCreateListener {
 
     @Inject protected CurrentListPresenter currentListPresenter;
     private CurrentListAdapter currentListAdapter;
@@ -33,6 +37,7 @@ public class CurrentListActivity extends BaseActivity implements CurrentListView
         injectDependencies();
         binding = DataBindingUtil.setContentView(this, R.layout.activity_current_list);
         setupShoppingLists();
+        steupViews();
     }
 
     private void injectDependencies() {
@@ -85,5 +90,19 @@ public class CurrentListActivity extends BaseActivity implements CurrentListView
 
         binding.recyclerViewCurrent.setLayoutManager(linearLayoutManager);
         binding.recyclerViewCurrent.setAdapter(currentListAdapter);
+    }
+
+    private void steupViews() {
+        binding.buttonAddList.setOnClickListener(view -> {
+            CreateShoppingListDialog createShoppingListDialog = new CreateShoppingListDialog();
+            createShoppingListDialog.show(getSupportFragmentManager(), CreateShoppingListDialog
+                    .TAG);
+        });
+    }
+
+    @Override
+    public void onShoppingListCreated(String shoppingListName) {
+        Timber.d("Shopping list created: %s", shoppingListName);
+        currentListPresenter.createShoppingList(shoppingListName);
     }
 }
