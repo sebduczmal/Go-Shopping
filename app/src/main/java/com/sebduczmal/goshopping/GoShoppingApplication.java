@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.sebduczmal.goshopping.common.di.ApplicationComponent;
 import com.sebduczmal.goshopping.common.di.DaggerApplicationComponent;
+import com.sebduczmal.goshopping.data.DbModule;
 
 import timber.log.Timber;
 
@@ -24,7 +25,7 @@ public class GoShoppingApplication extends Application {
 
     private void setupApplicationComponent() {
         applicationComponent = DaggerApplicationComponent.builder().applicationModule(new
-                ApplicationComponent.ApplicationModule(this)).build();
+                ApplicationComponent.ApplicationModule(this)).dbModule(new DbModule()).build();
     }
 
     private void setupTimberLogging() {

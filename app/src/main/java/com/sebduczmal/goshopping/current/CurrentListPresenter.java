@@ -2,16 +2,21 @@ package com.sebduczmal.goshopping.current;
 
 import com.sebduczmal.goshopping.BasePresenter;
 import com.sebduczmal.goshopping.model.ShoppingList;
+import com.squareup.sqlbrite2.BriteDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 
 public class CurrentListPresenter extends BasePresenter<CurrentListView> {
 
     private final List<ShoppingList> shoppingLists;
+    private final BriteDatabase db;
 
-    public CurrentListPresenter() {
+    public CurrentListPresenter(BriteDatabase db) {
+        this.db = db;
         this.shoppingLists = new ArrayList<>();
     }
 

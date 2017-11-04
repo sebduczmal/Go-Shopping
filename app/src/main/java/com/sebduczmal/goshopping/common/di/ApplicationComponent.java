@@ -2,6 +2,11 @@ package com.sebduczmal.goshopping.common.di;
 
 import android.content.Context;
 
+import com.sebduczmal.goshopping.data.DbModule;
+import com.squareup.sqlbrite2.BriteDatabase;
+
+import javax.inject.Singleton;
+
 import dagger.Component;
 import dagger.Module;
 import dagger.Provides;
@@ -12,7 +17,9 @@ public interface ApplicationComponent {
 
     Context exposeAppContext();
 
-    @Module
+    BriteDatabase exposeDatabase();
+
+    @Module(includes = {DbModule.class})
     class ApplicationModule {
         private final Context appContext;
 
