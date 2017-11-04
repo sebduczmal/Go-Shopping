@@ -2,6 +2,9 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
+    dataBinding {
+        enabled = true
+    }
     defaultConfig {
         applicationId "com.sebduczmal.goshopping"
         minSdkVersion 17
@@ -26,6 +29,7 @@ def SUPPORT_VERSION = "26.1.0"
 def DAGGER_VERSION = "2.9"
 
 dependencies {
+    implementation 'com.android.support:design:26.1.0'
     compile "com.android.support:recyclerview-v7:$SUPPORT_VERSION"
     compile "com.android.support:appcompat-v7:$SUPPORT_VERSION"
     compile "com.android.support.constraint:constraint-layout:1.0.2"
