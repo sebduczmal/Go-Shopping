@@ -1,6 +1,7 @@
 package com.sebduczmal.goshopping.model;
 
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,10 +13,11 @@ public class ShoppingList {
     private List<ShoppingItem> items;
     private boolean archived;
 
-    public ShoppingList(long id, String title, Date date) {
+    public ShoppingList(long id, String title) {
         this.id = id;
         this.title = title;
-        this.date = date;
+        items = new ArrayList<>();
+        date = new Date(System.currentTimeMillis());
     }
 
     public long getId() {
