@@ -41,6 +41,11 @@ dependencies {
     compile "com.jakewharton.timber:timber:4.1.2"
     compile "com.squareup.sqlbrite2:sqlbrite:2.0.0"
 
+    compile "com.google.auto.value:auto-value:1.5"
+    annotationProcessor "com.google.auto.value:auto-value:1.5"
+    compile "com.ryanharter.auto.value:auto-value-parcel:0.2.5"
+    annotationProcessor "com.ryanharter.auto.value:auto-value-parcel:0.2.5"
+
     compile "com.google.dagger:dagger:$DAGGER_VERSION"
     annotationProcessor "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
 

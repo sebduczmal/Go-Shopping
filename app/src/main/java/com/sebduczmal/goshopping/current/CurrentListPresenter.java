@@ -21,13 +21,13 @@ public class CurrentListPresenter extends BasePresenter<CurrentListView> {
     }
 
     public void loadCurrentShoppingLists() {
-        view().onLoadingShoppingListsStarted();
-        for (int i = 0; i < 10; i++) {
-            ShoppingList shoppingList = new ShoppingList(i, "AAAAAAA");
-            shoppingLists.add(shoppingList);
-        }
-        view().showCurrentShoppingLists(shoppingLists);
-        view().onLoadingShoppingListsFinished();
+//        view().onLoadingShoppingListsStarted();
+//        for (int i = 0; i < 10; i++) {
+//            ShoppingList shoppingList = new ShoppingList(i, "AAAAAAA");
+//            shoppingLists.add(shoppingList);
+//        }
+//        view().showCurrentShoppingLists(shoppingLists);
+//        view().onLoadingShoppingListsFinished();
     }
 
     @Override
@@ -36,7 +36,7 @@ public class CurrentListPresenter extends BasePresenter<CurrentListView> {
     }
 
     public void createShoppingList(String shoppingListName) {
-        shoppingLists.add(new ShoppingList(1, shoppingListName));
-        view().showCurrentShoppingLists(shoppingLists);
+//        shoppingLists.add(new ShoppingList(1, shoppingListName));
+//        view().showCurrentShoppingLists(shoppingLists);
     }
 }

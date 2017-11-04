@@ -33,7 +33,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{model.title}"/>
+                android:text="@{model.name}"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -45,7 +45,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{model.date.toString()}"/>
+            android:text="@{String.valueOf(model.date)}"/>
 
     </LinearLayout>
 </layout>

@@ -1,62 +1,54 @@
 package com.sebduczmal.goshopping.model;
 
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import android.content.ContentValues;
+import android.os.Parcelable;
 
-public class ShoppingList {
+import com.google.auto.value.AutoValue;
 
-    private long id;
-    private String title;
-    private Date date;
-    private List<ShoppingItem> items;
-    private boolean archived;
+@AutoValue
+public abstract class ShoppingList implements Parcelable {
 
-    public ShoppingList(long id, String title) {
-        this.id = id;
-        this.title = title;
-        items = new ArrayList<>();
-        date = new Date(System.currentTimeMillis());
-    }
+    public static final String TABLE = "shopping_list";
 
-    public long getId() {
-        return id;
-    }
+    public static final String ID = "_id";
+    public static final String NAME = "name";
+    public static final String ARCHIVED = "archived";
+    public static final String DATE = "date";
 
-    public void setId(long id) {
-        this.id = id;
-    }
+    public abstract long id();
 
-    public String getTitle() {
-        return title;
-    }
+    public abstract String name();
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+    public abstract long date();
 
-    public Date getDate() {
-        return date;
-    }
+    public abstract boolean archived();
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
+    public static final class Builder {
+        private final ContentValues values = new ContentValues();
 
-    public List<ShoppingItem> getItems() {
-        return items;
-    }
+        public Builder id(long id) {
+            values.put(ID, id);
+            return this;
+        }
 
-    public void setItems(List<ShoppingItem> items) {
-        this.items = items;
-    }
+        public Builder name(String name) {
+            values.put(NAME, name);
+            return this;
+        }
 
-    public boolean isArchived() {
-        return archived;
-    }
+        public Builder archived(boolean archived) {
+            values.put(ARCHIVED, archived);
+            return this;
+        }
 
-    public void setArchived(boolean archived) {
-        this.archived = archived;
+        public Builder date(long date) {
+            values.put(DATE, date);
+            return this;
+        }
+
+        public ContentValues build() {
+            return values;
+        }
     }
 }

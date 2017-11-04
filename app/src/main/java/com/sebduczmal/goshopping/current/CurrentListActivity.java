@@ -78,7 +78,7 @@ public class CurrentListActivity extends BaseActivity implements CurrentListView
 
     @Override
     public void onShoppingListClick(ShoppingList shoppingList) {
-        startActivity(ShoppingListDetailsActivity.forShoppingListId(this, shoppingList.getId()));
+        startActivity(ShoppingListDetailsActivity.forShoppingListId(this, 0));
     }
 
     private void setupShoppingLists() {
