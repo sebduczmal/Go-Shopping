@@ -25,11 +25,13 @@ public class ShoppingListDetailsPresenter extends BasePresenter<ShoppingListDeta
     }
 
     public void loadShoppingListDetails(ShoppingListDetailsAdapter adapter, long shoppingListId) {
+        view().onLoadingItemsStarted();
         disposables.add(db.createQuery(
                 ShoppingItem.TABLE, LIST_QUERY, String.valueOf(shoppingListId))
                 .mapToList(ShoppingItem.MAPPER)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(adapter));
+        view().onLoadingItemsListsFinished();
     }
 
     @Override

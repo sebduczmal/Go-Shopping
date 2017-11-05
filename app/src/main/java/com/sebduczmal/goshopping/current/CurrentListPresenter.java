@@ -2,11 +2,13 @@ package com.sebduczmal.goshopping.current;
 
 import com.sebduczmal.goshopping.BasePresenter;
 import com.sebduczmal.goshopping.current.list.CurrentListAdapter;
+import com.sebduczmal.goshopping.model.ShoppingList;
 import com.sebduczmal.goshopping.model.ShoppingListsItem;
 import com.squareup.sqlbrite2.BriteDatabase;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import timber.log.Timber;
 
 
 public class CurrentListPresenter extends BasePresenter<CurrentListView> {
@@ -34,5 +36,9 @@ public class CurrentListPresenter extends BasePresenter<CurrentListView> {
     }
 
     public void createShoppingList(String shoppingListName) {
+        db.insert(ShoppingList.TABLE, new ShoppingList.Builder()
+                .name(shoppingListName)
+                .date(System.currentTimeMillis()).build());
+        Timber.d("%s shopping list created", shoppingListName);
     }
 }

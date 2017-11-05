@@ -80,12 +80,12 @@ public class ShoppingListDetailsActivity extends BaseActivity implements Shoppin
     }
 
     @Override
-    public void onLoadingShoppingListsStarted() {
+    public void onLoadingItemsStarted() {
         showProgressDialog(R.string.loading_items);
     }
 
     @Override
-    public void onLoadingShoppingListsFinished() {
+    public void onLoadingItemsListsFinished() {
         hideProgressDialog();
     }
 

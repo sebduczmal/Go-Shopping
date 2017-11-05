@@ -49,11 +49,6 @@ public class CurrentListAdapter extends RecyclerView.Adapter<CurrentListAdapter
         return shoppingLists.size();
     }
 
-    public void updateShoppingLists(List<ShoppingListsItem> shoppingLists) {
-        this.shoppingLists.clear();
-        this.shoppingLists.addAll(shoppingLists);
-    }
-
     public void setOnShoppingListClickListener(OnShoppingListClickListener listener) {
         onShoppingListClickListener = listener;
     }
