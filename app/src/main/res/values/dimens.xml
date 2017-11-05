@@ -15,4 +15,6 @@
     <dimen name="dialog_buttons_margin_top">32dp</dimen>
     <dimen name="dialog_button_size">14sp</dimen>
     <dimen name="remove_drawable_width">2dp</dimen>
+    <dimen name="item_list_item_padding_vertical">12dp</dimen>
+    <dimen name="item_list_item_padding_horizontal">24dp</dimen>
 </resources>

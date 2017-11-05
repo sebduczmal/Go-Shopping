@@ -5,6 +5,7 @@
         tools:ignore="RtlHardcoded">
 
     <data>
+
         <import type="android.view.View"/>
 
         <variable
@@ -30,15 +31,23 @@
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
+        android:gravity="center_vertical"
         android:onClick="@{() -> onShoppingItemClickListener.onShoppingItemClick(model)}"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/item_list_item_padding_vertical"
+        android:paddingLeft="@dimen/item_list_item_padding_horizontal"
+        android:paddingRight="@dimen/item_list_item_padding_horizontal"
+        android:paddingTop="@dimen/item_list_item_padding_vertical">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
             android:orientation="vertical">
 
             <TextView
+                style="@style/ListItemTitleText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{model.name()}"/>
@@ -46,34 +55,40 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/list_item_vertical_margin"
                 android:orientation="horizontal">
 
                 <TextView
+                    style="@style/ListItemSecondaryText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{String.valueOf(model.quantity())}"/>
 
                 <TextView
+                    style="@style/ListItemSecondaryText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/item_count_horizontal_margin"
+                    android:layout_marginStart="@dimen/item_count_horizontal_margin"
                     android:text="@{model.unit()}"/>
-            </LinearLayout>
 
+            </LinearLayout>
         </LinearLayout>
 
         <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="@dimen/button_archive_size"
+            android:layout_height="@dimen/button_archive_size"
             android:clickable="true"
             android:onClick="@{() -> onRemoveShoppingItemClickListener.onRemoveItemClick(model)}">
 
             <ImageView
-                android:layout_width="@dimen/remove_item_icon_size"
-                android:layout_height="@dimen/remove_item_icon_size"
-                android:visibility="@{archived ? View.GONE : View.VISIBLE}"
-                android:src="@drawable/remove_icon"/>
-        </FrameLayout>
+                android:layout_width="@dimen/archive_icon_size"
+                android:layout_height="@dimen/archive_icon_size"
+                android:layout_gravity="center"
+                android:src="@drawable/remove_icon"
+                android:visibility="@{archived || model.purchased() ? View.GONE : View.VISIBLE}"/>
 
+        </FrameLayout>
     </LinearLayout>
 
 </layout>

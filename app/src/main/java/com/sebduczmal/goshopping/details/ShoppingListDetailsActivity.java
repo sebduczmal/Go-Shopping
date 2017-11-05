@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 
 import com.sebduczmal.goshopping.BaseActivity;
@@ -107,6 +108,8 @@ public class ShoppingListDetailsActivity extends BaseActivity implements Shoppin
                 LinearLayoutManager.VERTICAL, false);
 
         binding.recyclerViewItems.setLayoutManager(linearLayoutManager);
+        binding.recyclerViewItems.addItemDecoration(new DividerItemDecoration(this,
+                DividerItemDecoration.VERTICAL));
         binding.recyclerViewItems.setAdapter(shoppingListDetailsAdapter);
     }
 

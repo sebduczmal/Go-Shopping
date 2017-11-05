@@ -46,6 +46,9 @@ public class ShoppingListDetailsAdapter extends RecyclerView.Adapter<ShoppingLis
         viewDataBinding.setOnRemoveShoppingItemClickListener(onRemoveItemClickListener);
         viewDataBinding.setModel(shoppingItem);
         viewDataBinding.setArchived(archived);
+        viewDataBinding.listShoppingItem.setBackgroundColor(shoppingItem.purchased() ?
+                context.getResources().getColor(R.color.colorGrayedOut)
+                : context.getResources().getColor(R.color.colorWhite));
         viewDataBinding.executePendingBindings();
     }
 
