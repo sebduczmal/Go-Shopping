@@ -25,9 +25,12 @@ import javax.inject.Inject;
 public class CurrentListActivity extends BaseActivity implements CurrentListView,
         OnShoppingListClickListener, OnShoppingListCreateListener, OnArchiveButtonClickListener {
 
+    private static final String BUNDLE_KEY_DISPLAY_ARCHIVED = "display_archived_key";
+
     @Inject protected CurrentListPresenter currentListPresenter;
     private CurrentListAdapter currentListAdapter;
     private ActivityCurrentListBinding binding;
+    private boolean displayArchived;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,10 +49,22 @@ public class CurrentListActivity extends BaseActivity implements CurrentListView
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putBoolean(BUNDLE_KEY_DISPLAY_ARCHIVED, displayArchived);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        displayArchived = savedInstanceState.getBoolean(BUNDLE_KEY_DISPLAY_ARCHIVED, false);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         currentListPresenter.attachView(this);
-        currentListPresenter.loadShoppingLists(currentListAdapter, false);
+        currentListPresenter.loadShoppingLists(currentListAdapter, displayArchived ? true : false);
     }
 
     @Override
@@ -64,8 +79,9 @@ public class CurrentListActivity extends BaseActivity implements CurrentListView
     }
 
     @Override
-    public void onLoadingShoppingListsFinished() {
+    public void onLoadingShoppingListsFinished(boolean loadedArchived) {
         hideProgressDialog();
+        displayArchived = loadedArchived;
     }
 
     @Override

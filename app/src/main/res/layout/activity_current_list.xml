@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
+    <data>
+
+        <import type="android.view.View"/>
+
+        <variable
+            name="archived"
+            type="boolean"/>
+
+        <variable
+            name="presenter"
+            type="com.sebduczmal.goshopping.current.CurrentListPresenter"/>
+
+        <variable
+            name="adapter"
+            type="com.sebduczmal.goshopping.current.list.CurrentListAdapter"/>
+    </data>
+
     <android.support.design.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"

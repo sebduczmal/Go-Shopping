@@ -28,7 +28,7 @@ public class CurrentListPresenter extends BasePresenter<CurrentListView> {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(adapter));
         view().toggleAddButtonVisibility(archived);
-        view().onLoadingShoppingListsFinished();
+        view().onLoadingShoppingListsFinished(archived);
     }
 
     @Override
