@@ -9,7 +9,7 @@
 
         <variable
             name="model"
-            type="com.sebduczmal.goshopping.model.ShoppingList"/>
+            type="com.sebduczmal.goshopping.model.ShoppingListsItem"/>
 
         <variable
             name="onShoppingListClickListener"
@@ -38,14 +38,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0"/>
+                android:text="@{String.valueOf(model.itemCount())}"/>
 
         </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{String.valueOf(model.date)}"/>
+            android:text=""/>
 
     </LinearLayout>
 </layout>

@@ -15,7 +15,7 @@ import com.sebduczmal.goshopping.current.list.CurrentListAdapter;
 import com.sebduczmal.goshopping.current.list.OnShoppingListClickListener;
 import com.sebduczmal.goshopping.databinding.ActivityCurrentListBinding;
 import com.sebduczmal.goshopping.details.ShoppingListDetailsActivity;
-import com.sebduczmal.goshopping.model.ShoppingList;
+import com.sebduczmal.goshopping.model.ShoppingListsItem;
 
 import java.util.List;
 
@@ -51,7 +51,7 @@ public class CurrentListActivity extends BaseActivity implements CurrentListView
     protected void onResume() {
         super.onResume();
         currentListPresenter.attachView(this);
-        currentListPresenter.loadCurrentShoppingLists();
+        currentListPresenter.loadCurrentShoppingLists(currentListAdapter);
     }
 
     @Override
@@ -61,7 +61,7 @@ public class CurrentListActivity extends BaseActivity implements CurrentListView
     }
 
     @Override
-    public void showCurrentShoppingLists(List<ShoppingList> shoppingLists) {
+    public void showCurrentShoppingLists(List<ShoppingListsItem> shoppingLists) {
         currentListAdapter.updateShoppingLists(shoppingLists);
         currentListAdapter.notifyDataSetChanged();
     }
@@ -77,8 +77,8 @@ public class CurrentListActivity extends BaseActivity implements CurrentListView
     }
 
     @Override
-    public void onShoppingListClick(ShoppingList shoppingList) {
-        startActivity(ShoppingListDetailsActivity.forShoppingListId(this, 0));
+    public void onShoppingListClick(ShoppingListsItem shoppingList) {
+        startActivity(ShoppingListDetailsActivity.forShoppingListId(this, shoppingList.id()));
     }
 
     private void setupShoppingLists() {

@@ -1,8 +1,8 @@
 package com.sebduczmal.goshopping.current.list;
 
 
-import com.sebduczmal.goshopping.model.ShoppingList;
+import com.sebduczmal.goshopping.model.ShoppingListsItem;
 
 public interface OnShoppingListClickListener {
-    void onShoppingListClick(ShoppingList shoppingList);
+    void onShoppingListClick(ShoppingListsItem shoppingList);
 }

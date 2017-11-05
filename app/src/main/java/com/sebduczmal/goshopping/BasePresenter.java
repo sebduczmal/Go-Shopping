@@ -7,9 +7,12 @@ import android.support.annotation.Nullable;
 
 import java.lang.reflect.Proxy;
 
+import io.reactivex.disposables.CompositeDisposable;
 import timber.log.Timber;
 
 public abstract class BasePresenter<View> {
+
+    protected final CompositeDisposable disposables = new CompositeDisposable();
 
     @Nullable private View view;
 
@@ -36,6 +39,7 @@ public abstract class BasePresenter<View> {
 
     @CallSuper
     public void detachView() {
+        disposables.dispose();
         view = null;
     }
 }

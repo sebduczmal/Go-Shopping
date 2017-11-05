@@ -8,16 +8,18 @@ import android.view.ViewGroup;
 
 import com.sebduczmal.goshopping.R;
 import com.sebduczmal.goshopping.databinding.ListItemShoppingListBinding;
-import com.sebduczmal.goshopping.model.ShoppingList;
+import com.sebduczmal.goshopping.model.ShoppingListsItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.functions.Consumer;
+
 public class CurrentListAdapter extends RecyclerView.Adapter<CurrentListAdapter
-        .ShoppingListViewHolder> {
+        .ShoppingListViewHolder> implements Consumer<List<ShoppingListsItem>> {
 
     private final Context context;
-    private List<ShoppingList> shoppingLists;
+    private List<ShoppingListsItem> shoppingLists;
     private OnShoppingListClickListener onShoppingListClickListener;
 
     public CurrentListAdapter(Context context) {
@@ -34,7 +36,7 @@ public class CurrentListAdapter extends RecyclerView.Adapter<CurrentListAdapter
 
     @Override
     public void onBindViewHolder(ShoppingListViewHolder holder, int position) {
-        final ShoppingList shoppingList = shoppingLists.get(position);
+        final ShoppingListsItem shoppingList = shoppingLists.get(position);
         final ListItemShoppingListBinding viewDataBinding = holder.viewDataBinding;
 
         viewDataBinding.setOnShoppingListClickListener(onShoppingListClickListener);
@@ -47,13 +49,19 @@ public class CurrentListAdapter extends RecyclerView.Adapter<CurrentListAdapter
         return shoppingLists.size();
     }
 
-    public void updateShoppingLists(List<ShoppingList> shoppingLists) {
+    public void updateShoppingLists(List<ShoppingListsItem> shoppingLists) {
         this.shoppingLists.clear();
         this.shoppingLists.addAll(shoppingLists);
     }
 
     public void setOnShoppingListClickListener(OnShoppingListClickListener listener) {
         onShoppingListClickListener = listener;
+    }
+
+    @Override
+    public void accept(List<ShoppingListsItem> shoppingListsItems) {
+        this.shoppingLists = shoppingListsItems;
+        notifyDataSetChanged();
     }
 
     static class ShoppingListViewHolder extends RecyclerView.ViewHolder {

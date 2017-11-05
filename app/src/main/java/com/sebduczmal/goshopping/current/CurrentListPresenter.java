@@ -1,33 +1,31 @@
 package com.sebduczmal.goshopping.current;
 
 import com.sebduczmal.goshopping.BasePresenter;
-import com.sebduczmal.goshopping.model.ShoppingList;
+import com.sebduczmal.goshopping.current.list.CurrentListAdapter;
+import com.sebduczmal.goshopping.model.ShoppingListsItem;
 import com.squareup.sqlbrite2.BriteDatabase;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.inject.Inject;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 
 
 public class CurrentListPresenter extends BasePresenter<CurrentListView> {
 
-    private final List<ShoppingList> shoppingLists;
     private final BriteDatabase db;
 
     public CurrentListPresenter(BriteDatabase db) {
         this.db = db;
-        this.shoppingLists = new ArrayList<>();
     }
 
-    public void loadCurrentShoppingLists() {
-//        view().onLoadingShoppingListsStarted();
-//        for (int i = 0; i < 10; i++) {
-//            ShoppingList shoppingList = new ShoppingList(i, "AAAAAAA");
-//            shoppingLists.add(shoppingList);
-//        }
-//        view().showCurrentShoppingLists(shoppingLists);
-//        view().onLoadingShoppingListsFinished();
+    public void loadCurrentShoppingLists(CurrentListAdapter adapter) {
+        view().onLoadingShoppingListsStarted();
+        final Disposable disposable = db.createQuery(ShoppingListsItem.TABLES, ShoppingListsItem
+                .QUERY)
+                .mapToList(ShoppingListsItem.MAPPER)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(adapter);
+        disposables.add(disposable);
+        view().onLoadingShoppingListsFinished();
     }
 
     @Override
@@ -36,7 +34,5 @@ public class CurrentListPresenter extends BasePresenter<CurrentListView> {
     }
 
     public void createShoppingList(String shoppingListName) {
-//        shoppingLists.add(new ShoppingList(1, shoppingListName));
-//        view().showCurrentShoppingLists(shoppingLists);
     }
 }
