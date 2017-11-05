@@ -5,6 +5,11 @@
         tools:ignore="RtlHardcoded">
 
     <data>
+        <import type="android.view.View"/>
+
+        <variable
+            name="archived"
+            type="boolean"/>
 
         <variable
             name="model"
@@ -65,6 +70,7 @@
             <ImageView
                 android:layout_width="@dimen/remove_item_icon_size"
                 android:layout_height="@dimen/remove_item_icon_size"
+                android:visibility="@{archived ? View.GONE : View.VISIBLE}"
                 android:src="@drawable/remove_icon"/>
         </FrameLayout>
 

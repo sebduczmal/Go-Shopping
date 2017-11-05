@@ -4,6 +4,7 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.sebduczmal.goshopping.R;
@@ -19,6 +20,7 @@ public class CurrentListAdapter extends RecyclerView.Adapter<CurrentListAdapter
         .ShoppingListViewHolder> implements Consumer<List<ShoppingListsItem>> {
 
     private final Context context;
+    private ListItemShoppingListBinding viewDataBinding;
     private List<ShoppingListsItem> shoppingLists;
     private OnShoppingListClickListener onShoppingListClickListener;
     private OnArchiveButtonClickListener onArchiveButtonClickListener;
@@ -30,8 +32,8 @@ public class CurrentListAdapter extends RecyclerView.Adapter<CurrentListAdapter
 
     @Override
     public ShoppingListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        final ListItemShoppingListBinding viewDataBinding = DataBindingUtil.inflate
-                (LayoutInflater.from(context), R.layout.list_item_shopping_list, parent, false);
+        viewDataBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout
+                .list_item_shopping_list, parent, false);
         return new ShoppingListViewHolder(viewDataBinding);
     }
 

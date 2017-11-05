@@ -5,4 +5,6 @@ public interface CurrentListView {
     void onLoadingShoppingListsStarted();
 
     void onLoadingShoppingListsFinished();
+
+    void toggleAddButtonVisibility(boolean archived);
 }

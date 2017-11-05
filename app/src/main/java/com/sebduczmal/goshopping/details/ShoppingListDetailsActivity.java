@@ -32,8 +32,10 @@ public class ShoppingListDetailsActivity extends BaseActivity implements Shoppin
     private ShoppingListDetailsAdapter shoppingListDetailsAdapter;
     private ActivityShoppingListDetailsBinding binding;
     private long shoppingListId;
+    private boolean archived;
 
-    public static Intent forShoppingListId(Activity callingActivity, long shoppingListId, boolean archived) {
+    public static Intent forShoppingListId(Activity callingActivity, long shoppingListId, boolean
+            archived) {
         final Intent result = new Intent(callingActivity, ShoppingListDetailsActivity.class);
         result.putExtra(EXTRA_SHOPPING_LIST_ID, shoppingListId);
         result.putExtra(EXTRA_SHOPPING_LIST_ARCHIVED, archived);
@@ -45,6 +47,7 @@ public class ShoppingListDetailsActivity extends BaseActivity implements Shoppin
         super.onCreate(savedInstanceState);
         injectDependencies();
         binding = DataBindingUtil.setContentView(this, R.layout.activity_shopping_list_details);
+        getParentListState();
         setupItemsList();
         setupViews();
     }
@@ -96,7 +99,7 @@ public class ShoppingListDetailsActivity extends BaseActivity implements Shoppin
     }
 
     private void setupItemsList() {
-        shoppingListDetailsAdapter = new ShoppingListDetailsAdapter(this);
+        shoppingListDetailsAdapter = new ShoppingListDetailsAdapter(this, archived);
         shoppingListDetailsAdapter.setOnItemClickListener(this);
         shoppingListDetailsAdapter.setOnRemoveItemClickListener(this);
 
@@ -105,6 +108,13 @@ public class ShoppingListDetailsActivity extends BaseActivity implements Shoppin
 
         binding.recyclerViewItems.setLayoutManager(linearLayoutManager);
         binding.recyclerViewItems.setAdapter(shoppingListDetailsAdapter);
+    }
+
+    private void getParentListState() {
+        final Intent startingIntent = getIntent();
+        if (startingIntent != null && startingIntent.hasExtra(EXTRA_SHOPPING_LIST_ARCHIVED)) {
+            archived = startingIntent.getBooleanExtra(EXTRA_SHOPPING_LIST_ARCHIVED, false);
+        }
     }
 
     private void loadShoppingListDetailsIfNeeded() {
@@ -118,6 +128,7 @@ public class ShoppingListDetailsActivity extends BaseActivity implements Shoppin
     }
 
     private void setupViews() {
+        binding.setArchived(archived);
         binding.buttonAddItem.setOnClickListener(view -> {
             CreateShoppingItemDialog createShoppingItemDialog = new CreateShoppingItemDialog();
             createShoppingItemDialog.show(getSupportFragmentManager(), "create-item");

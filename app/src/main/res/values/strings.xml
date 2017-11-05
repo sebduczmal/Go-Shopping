@@ -7,4 +7,5 @@
     <string name="loading_items">Loading shopping list items</string>
     <string name="description_create_shopping_item">Add new item to your shopping list</string>
     <string name="button_show_archived">Show archived</string>
+    <string name="button_show_current">Show current</string>
 </resources>

@@ -22,10 +22,12 @@ public class ShoppingListDetailsAdapter extends RecyclerView.Adapter<ShoppingLis
     private List<ShoppingItem> shoppingItems;
     private OnItemClickListener onItemClickListener;
     private OnRemoveItemClickListener onRemoveItemClickListener;
+    private boolean archived;
 
-    public ShoppingListDetailsAdapter(Context context) {
+    public ShoppingListDetailsAdapter(Context context, boolean archived) {
         this.context = context;
         shoppingItems = new ArrayList<>();
+        this.archived = archived;
     }
 
     @Override
@@ -43,6 +45,7 @@ public class ShoppingListDetailsAdapter extends RecyclerView.Adapter<ShoppingLis
         viewDataBinding.setOnShoppingItemClickListener(onItemClickListener);
         viewDataBinding.setOnRemoveShoppingItemClickListener(onRemoveItemClickListener);
         viewDataBinding.setModel(shoppingItem);
+        viewDataBinding.setArchived(archived);
         viewDataBinding.executePendingBindings();
     }
 

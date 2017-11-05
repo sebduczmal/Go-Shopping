@@ -6,6 +6,8 @@
 
     <data>
 
+        <import type="android.view.View"/>
+
         <variable
             name="model"
             type="com.sebduczmal.goshopping.model.ShoppingListsItem"/>
@@ -20,7 +22,7 @@
     </data>
 
     <LinearLayout
-        android:id="@+id/list_item_"
+        android:id="@+id/list_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
@@ -44,11 +46,13 @@
                 android:text="@{String.valueOf(model.itemCount())}"/>
 
             <ImageView
+                android:id="@+id/button_archive_item"
                 android:layout_width="@dimen/button_archive_size"
                 android:layout_height="@dimen/button_archive_size"
                 android:clickable="true"
                 android:onClick="@{() -> onArchiveButtonClickListener.onArchived(model)}"
-                android:src="@drawable/remove_icon"/>
+                android:src="@drawable/remove_icon"
+                android:visibility="@{model.archived() ? View.GONE : View.VISIBLE}"/>
 
         </LinearLayout>
 

@@ -24,11 +24,13 @@ public class CurrentListPresenter extends BasePresenter<CurrentListView> {
     public void loadShoppingLists(CurrentListAdapter adapter, boolean archived) {
         view().onLoadingShoppingListsStarted();
         int whereClauseValue = archived ? Db.BOOLEAN_TRUE : Db.BOOLEAN_FALSE;
-        shoppingListsDisposable = db.createQuery(ShoppingListsItem.TABLES, ShoppingListsItem.QUERY, String.valueOf(whereClauseValue))
+        shoppingListsDisposable = db.createQuery(ShoppingListsItem.TABLES, ShoppingListsItem
+                .QUERY, String.valueOf(whereClauseValue))
                 .mapToList(ShoppingListsItem.MAPPER)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(adapter);
         disposables.add(shoppingListsDisposable);
+        view().toggleAddButtonVisibility(archived);
         view().onLoadingShoppingListsFinished();
     }
 

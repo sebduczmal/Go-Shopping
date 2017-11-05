@@ -4,6 +4,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
 
 import com.sebduczmal.goshopping.BaseActivity;
 import com.sebduczmal.goshopping.R;
@@ -68,8 +69,14 @@ public class CurrentListActivity extends BaseActivity implements CurrentListView
     }
 
     @Override
+    public void toggleAddButtonVisibility(boolean archived) {
+        binding.buttonAddList.setVisibility(archived ? View.INVISIBLE : View.VISIBLE);
+    }
+
+    @Override
     public void onShoppingListClick(ShoppingListsItem shoppingList) {
-        startActivity(ShoppingListDetailsActivity.forShoppingListId(this, shoppingList.id(), false));
+        startActivity(ShoppingListDetailsActivity.forShoppingListId(this, shoppingList.id(),
+                shoppingList.archived()));
     }
 
     @Override
@@ -96,6 +103,9 @@ public class CurrentListActivity extends BaseActivity implements CurrentListView
         });
         binding.buttonShowArchived.setOnClickListener(view -> {
             currentListPresenter.loadShoppingLists(currentListAdapter, true);
+        });
+        binding.buttonShowCurrent.setOnClickListener(view -> {
+            currentListPresenter.loadShoppingLists(currentListAdapter, false);
         });
     }
 

@@ -25,7 +25,8 @@ public abstract class ShoppingListsItem implements Parcelable {
 
     public static Collection<String> TABLES = Arrays.asList(ShoppingList.TABLE, ShoppingItem.TABLE);
     public static String QUERY = ""
-            + "SELECT " + LIST_ID + ", " + LIST_NAME + ", COUNT(" + ITEM_ID + ") as " + ITEM_COUNT
+            + "SELECT " + LIST_ID + ", " + LIST_NAME + ", " + LIST_ARCHIVED + ", COUNT(" +
+            ITEM_ID + ") as " + ITEM_COUNT
             + " FROM " + ShoppingList.TABLE + " AS " + ALIAS_LIST
             + " LEFT OUTER JOIN " + ShoppingItem.TABLE + " AS " + ALIAS_ITEM + " ON " + LIST_ID +
             " = " + ITEM_LIST_ID
@@ -39,11 +40,14 @@ public abstract class ShoppingListsItem implements Parcelable {
 
     public abstract int itemCount();
 
+    public abstract boolean archived();
+
     public static Function<Cursor, ShoppingListsItem> MAPPER = cursor -> {
         long id = Db.getLong(cursor, ShoppingList.ID);
         String name = Db.getString(cursor, ShoppingList.NAME);
         int itemCount = Db.getInt(cursor, ITEM_COUNT);
-        return new AutoValue_ShoppingListsItem(id, name, itemCount);
+        boolean archived = Db.getBoolean(cursor, ShoppingList.ARCHIVED);
+        return new AutoValue_ShoppingListsItem(id, name, itemCount, archived);
     };
 
 }
