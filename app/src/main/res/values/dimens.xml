@@ -10,4 +10,8 @@
     <dimen name="secondary_info_text_size">12sp</dimen>
     <dimen name="list_item_vertical_margin">8dp</dimen>
     <dimen name="archive_icon_size">16dp</dimen>
+    <dimen name="dialog_padding">16dp</dimen>
+    <dimen name="input_margin_top">16dp</dimen>
+    <dimen name="dialog_buttons_margin_top">32dp</dimen>
+    <dimen name="dialog_button_size">14sp</dimen>
 </resources>

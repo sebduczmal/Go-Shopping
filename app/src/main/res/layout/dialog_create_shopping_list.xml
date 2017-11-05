@@ -4,9 +4,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingEnd="@dimen/dialog_padding"
+        android:paddingStart="@dimen/dialog_padding"
+        android:paddingTop="@dimen/dialog_padding">
 
         <TextView
+            style="@style/DialogTitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/description_create_shopping_list"/>
@@ -15,22 +19,28 @@
             android:id="@+id/et_shopping_list_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="@string/hint_list_name"
+            android:inputType="text"
+            android:layout_marginTop="@dimen/input_margin_top"
             />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dialog_buttons_margin_top"
             android:orientation="horizontal">
 
-            <Button
+            <TextView
                 android:id="@+id/button_cancel"
+                style="@style/DialogTextButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/cancel"/>
 
-            <Button
+            <TextView
                 android:id="@+id/button_ok"
+                style="@style/DialogTextButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
