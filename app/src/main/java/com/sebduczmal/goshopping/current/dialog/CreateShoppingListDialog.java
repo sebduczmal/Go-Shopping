@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Toast;
 
 import com.jakewharton.rxbinding2.view.RxView;
@@ -37,11 +38,6 @@ public class CreateShoppingListDialog extends DialogFragment {
         }
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
@@ -49,6 +45,7 @@ public class CreateShoppingListDialog extends DialogFragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.dialog_create_shopping_list,
                 container, false);
         setupViews();
+        getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         return binding.getRoot();
     }
 
