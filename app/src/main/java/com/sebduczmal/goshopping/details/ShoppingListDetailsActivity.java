@@ -26,15 +26,17 @@ public class ShoppingListDetailsActivity extends BaseActivity implements Shoppin
         OnItemClickListener, OnRemoveItemClickListener, OnShoppingItemCreateListener {
 
     private static final String EXTRA_SHOPPING_LIST_ID = "extra_shopping_list_id";
+    private static final String EXTRA_SHOPPING_LIST_ARCHIVED = "extra_shopping_list_archived";
 
     @Inject protected ShoppingListDetailsPresenter shoppingListDetailsPresenter;
     private ShoppingListDetailsAdapter shoppingListDetailsAdapter;
     private ActivityShoppingListDetailsBinding binding;
     private long shoppingListId;
 
-    public static Intent forShoppingListId(Activity callingActivity, long shoppingListId) {
+    public static Intent forShoppingListId(Activity callingActivity, long shoppingListId, boolean archived) {
         final Intent result = new Intent(callingActivity, ShoppingListDetailsActivity.class);
         result.putExtra(EXTRA_SHOPPING_LIST_ID, shoppingListId);
+        result.putExtra(EXTRA_SHOPPING_LIST_ARCHIVED, archived);
         return result;
     }
 

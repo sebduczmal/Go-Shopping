@@ -6,4 +6,5 @@
     <string name="description_create_shopping_list">Name your new shopping list</string>
     <string name="loading_items">Loading shopping list items</string>
     <string name="description_create_shopping_item">Add new item to your shopping list</string>
+    <string name="button_show_archived">Show archived</string>
 </resources>

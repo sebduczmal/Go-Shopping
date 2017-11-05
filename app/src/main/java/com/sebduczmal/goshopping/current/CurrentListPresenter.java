@@ -14,19 +14,20 @@ import timber.log.Timber;
 public class CurrentListPresenter extends BasePresenter<CurrentListView> {
 
     private final BriteDatabase db;
+    private Disposable shoppingListsDisposable;
 
     public CurrentListPresenter(BriteDatabase db) {
         this.db = db;
     }
 
-    public void loadCurrentShoppingLists(CurrentListAdapter adapter) {
+    public void loadShoppingLists(CurrentListAdapter adapter, boolean archived) {
         view().onLoadingShoppingListsStarted();
-        final Disposable disposable = db.createQuery(ShoppingListsItem.TABLES, ShoppingListsItem
-                .QUERY)
+        shoppingListsDisposable = db.createQuery(ShoppingListsItem.TABLES, ShoppingListsItem
+                .getQuery(archived))
                 .mapToList(ShoppingListsItem.MAPPER)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(adapter);
-        disposables.add(disposable);
+        disposables.add(shoppingListsDisposable);
         view().onLoadingShoppingListsFinished();
     }
 
@@ -40,5 +41,11 @@ public class CurrentListPresenter extends BasePresenter<CurrentListView> {
                 .name(shoppingListName)
                 .date(System.currentTimeMillis()).build());
         Timber.d("%s shopping list created", shoppingListName);
+    }
+
+    public void archiveShoppingList(ShoppingListsItem shoppingList) {
+        db.update(ShoppingList.TABLE, new ShoppingList.Builder().archived(true).build(),
+                ShoppingList.ID + " = ?", String.valueOf(shoppingList.id()));
+        Timber.d("%s list archived", shoppingList.name());
     }
 }

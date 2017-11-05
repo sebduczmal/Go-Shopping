@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="RtlHardcoded">
 
@@ -14,6 +13,10 @@
         <variable
             name="onShoppingListClickListener"
             type="com.sebduczmal.goshopping.current.list.OnShoppingListClickListener"/>
+
+        <variable
+            name="onArchiveButtonClickListener"
+            type="com.sebduczmal.goshopping.current.list.OnArchiveButtonClickListener"/>
     </data>
 
     <LinearLayout
@@ -39,6 +42,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{String.valueOf(model.itemCount())}"/>
+
+            <ImageView
+                android:layout_width="@dimen/button_archive_size"
+                android:layout_height="@dimen/button_archive_size"
+                android:clickable="true"
+                android:onClick="@{() -> onArchiveButtonClickListener.onArchived(model)}"
+                android:src="@drawable/remove_icon"/>
 
         </LinearLayout>
 

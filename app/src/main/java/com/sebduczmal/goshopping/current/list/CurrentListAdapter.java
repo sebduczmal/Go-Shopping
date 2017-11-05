@@ -21,6 +21,7 @@ public class CurrentListAdapter extends RecyclerView.Adapter<CurrentListAdapter
     private final Context context;
     private List<ShoppingListsItem> shoppingLists;
     private OnShoppingListClickListener onShoppingListClickListener;
+    private OnArchiveButtonClickListener onArchiveButtonClickListener;
 
     public CurrentListAdapter(Context context) {
         this.context = context;
@@ -40,6 +41,7 @@ public class CurrentListAdapter extends RecyclerView.Adapter<CurrentListAdapter
         final ListItemShoppingListBinding viewDataBinding = holder.viewDataBinding;
 
         viewDataBinding.setOnShoppingListClickListener(onShoppingListClickListener);
+        viewDataBinding.setOnArchiveButtonClickListener(onArchiveButtonClickListener);
         viewDataBinding.setModel(shoppingList);
         viewDataBinding.executePendingBindings();
     }
@@ -51,6 +53,10 @@ public class CurrentListAdapter extends RecyclerView.Adapter<CurrentListAdapter
 
     public void setOnShoppingListClickListener(OnShoppingListClickListener listener) {
         onShoppingListClickListener = listener;
+    }
+
+    public void setOnArchiveButtonClickListener(OnArchiveButtonClickListener listener) {
+        onArchiveButtonClickListener = listener;
     }
 
     @Override

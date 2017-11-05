@@ -12,6 +12,7 @@ import com.sebduczmal.goshopping.current.di.ShoppingListComponent;
 import com.sebduczmal.goshopping.current.dialog.CreateShoppingListDialog;
 import com.sebduczmal.goshopping.current.dialog.OnShoppingListCreateListener;
 import com.sebduczmal.goshopping.current.list.CurrentListAdapter;
+import com.sebduczmal.goshopping.current.list.OnArchiveButtonClickListener;
 import com.sebduczmal.goshopping.current.list.OnShoppingListClickListener;
 import com.sebduczmal.goshopping.databinding.ActivityCurrentListBinding;
 import com.sebduczmal.goshopping.details.ShoppingListDetailsActivity;
@@ -21,7 +22,7 @@ import javax.inject.Inject;
 
 
 public class CurrentListActivity extends BaseActivity implements CurrentListView,
-        OnShoppingListClickListener, OnShoppingListCreateListener {
+        OnShoppingListClickListener, OnShoppingListCreateListener, OnArchiveButtonClickListener {
 
     @Inject protected CurrentListPresenter currentListPresenter;
     private CurrentListAdapter currentListAdapter;
@@ -47,7 +48,7 @@ public class CurrentListActivity extends BaseActivity implements CurrentListView
     protected void onResume() {
         super.onResume();
         currentListPresenter.attachView(this);
-        currentListPresenter.loadCurrentShoppingLists(currentListAdapter);
+        currentListPresenter.loadShoppingLists(currentListAdapter, false);
     }
 
     @Override
@@ -71,9 +72,15 @@ public class CurrentListActivity extends BaseActivity implements CurrentListView
         startActivity(ShoppingListDetailsActivity.forShoppingListId(this, shoppingList.id()));
     }
 
+    @Override
+    public void onArchived(ShoppingListsItem shoppingList) {
+        currentListPresenter.archiveShoppingList(shoppingList);
+    }
+
     private void setupShoppingLists() {
         currentListAdapter = new CurrentListAdapter(this);
         currentListAdapter.setOnShoppingListClickListener(this);
+        currentListAdapter.setOnArchiveButtonClickListener(this);
 
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false);
@@ -86,6 +93,9 @@ public class CurrentListActivity extends BaseActivity implements CurrentListView
         binding.buttonAddList.setOnClickListener(view -> {
             CreateShoppingListDialog createShoppingListDialog = new CreateShoppingListDialog();
             createShoppingListDialog.show(getSupportFragmentManager(), "create-list");
+        });
+        binding.buttonShowArchived.setOnClickListener(view -> {
+            currentListPresenter.loadShoppingLists(currentListAdapter, true);
         });
     }
 
