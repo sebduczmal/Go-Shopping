@@ -2,4 +2,5 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="padding_current_list">16dp</dimen>
     <dimen name="add_icon_width">2dp</dimen>
+    <dimen name="remove_item_icon_size">32dp</dimen>
 </resources>

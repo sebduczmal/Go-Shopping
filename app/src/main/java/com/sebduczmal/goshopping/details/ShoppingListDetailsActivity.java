@@ -14,13 +14,14 @@ import com.sebduczmal.goshopping.databinding.ActivityShoppingListDetailsBinding;
 import com.sebduczmal.goshopping.details.di.DaggerShoppingListDetailsComponent;
 import com.sebduczmal.goshopping.details.di.ShoppingListDetailsComponent;
 import com.sebduczmal.goshopping.details.list.OnItemClickListener;
+import com.sebduczmal.goshopping.details.list.OnRemoveItemClickListener;
 import com.sebduczmal.goshopping.details.list.ShoppingListDetailsAdapter;
 import com.sebduczmal.goshopping.model.ShoppingItem;
 
 import javax.inject.Inject;
 
 public class ShoppingListDetailsActivity extends BaseActivity implements ShoppingListDetailsView,
-        OnItemClickListener {
+        OnItemClickListener, OnRemoveItemClickListener {
 
     private static final String EXTRA_SHOPPING_LIST_ID = "extra_shopping_list_id";
 
@@ -69,6 +70,11 @@ public class ShoppingListDetailsActivity extends BaseActivity implements Shoppin
     }
 
     @Override
+    public void onRemoveItemClick(ShoppingItem shoppingItem) {
+        shoppingListDetailsPresenter.removeItem(shoppingItem);
+    }
+
+    @Override
     public void setDetailsTitle(String title) {
         setTitle(title);
     }
@@ -86,6 +92,7 @@ public class ShoppingListDetailsActivity extends BaseActivity implements Shoppin
     private void setupItemsList() {
         shoppingListDetailsAdapter = new ShoppingListDetailsAdapter(this);
         shoppingListDetailsAdapter.setOnItemClickListener(this);
+        shoppingListDetailsAdapter.setOnRemoveItemClickListener(this);
 
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false);

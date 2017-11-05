@@ -11,6 +11,10 @@
             type="com.sebduczmal.goshopping.model.ShoppingItem"/>
 
         <variable
+            name="onRemoveShoppingItemClickListener"
+            type="com.sebduczmal.goshopping.details.list.OnRemoveItemClickListener"/>
+
+        <variable
             name="onShoppingItemClickListener"
             type="com.sebduczmal.goshopping.details.list.OnItemClickListener"/>
     </data>
@@ -24,20 +28,45 @@
         android:onClick="@{() -> onShoppingItemClickListener.onShoppingItemClick(model)}"
         android:orientation="horizontal">
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{model.name()}"/>
+            android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{String.valueOf(model.quantity())}"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{model.name()}"/>
 
-        <TextView
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(model.quantity())}"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{model.unit()}"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <FrameLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{model.unit()}"/>
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:onClick="@{() -> onRemoveShoppingItemClickListener.onRemoveItemClick(model)}">
+
+            <ImageView
+                android:layout_width="@dimen/remove_item_icon_size"
+                android:layout_height="@dimen/remove_item_icon_size"
+                android:src="@drawable/remove_icon"/>
+        </FrameLayout>
 
     </LinearLayout>
 

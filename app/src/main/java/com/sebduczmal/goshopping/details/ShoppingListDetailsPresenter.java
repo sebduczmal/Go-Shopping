@@ -45,4 +45,10 @@ public class ShoppingListDetailsPresenter extends BasePresenter<ShoppingListDeta
         Timber.d("%s changed purchase status to: %s", shoppingItem.name(), shoppingItem
                 .purchased());
     }
+
+    public void removeItem(ShoppingItem shoppingItem) {
+        db.delete(ShoppingItem.TABLE, shoppingItem.ID + " = ?",
+                String.valueOf(shoppingItem.id()));
+        Timber.d("%s removed from database", shoppingItem.name());
+    }
 }

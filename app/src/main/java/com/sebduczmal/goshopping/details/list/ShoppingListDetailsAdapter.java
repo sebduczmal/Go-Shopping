@@ -21,6 +21,7 @@ public class ShoppingListDetailsAdapter extends RecyclerView.Adapter<ShoppingLis
     private final Context context;
     private List<ShoppingItem> shoppingItems;
     private OnItemClickListener onItemClickListener;
+    private OnRemoveItemClickListener onRemoveItemClickListener;
 
     public ShoppingListDetailsAdapter(Context context) {
         this.context = context;
@@ -40,6 +41,7 @@ public class ShoppingListDetailsAdapter extends RecyclerView.Adapter<ShoppingLis
         final ListItemShoppingItemBinding viewDataBinding = holder.viewDataBinding;
 
         viewDataBinding.setOnShoppingItemClickListener(onItemClickListener);
+        viewDataBinding.setOnRemoveShoppingItemClickListener(onRemoveItemClickListener);
         viewDataBinding.setModel(shoppingItem);
         viewDataBinding.executePendingBindings();
     }
@@ -57,6 +59,10 @@ public class ShoppingListDetailsAdapter extends RecyclerView.Adapter<ShoppingLis
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
+    }
+
+    public void setOnRemoveItemClickListener(OnRemoveItemClickListener onRemoveItemClickListener) {
+        this.onRemoveItemClickListener = onRemoveItemClickListener;
     }
 
     static class ShoppingListDetailsViewHolder extends RecyclerView.ViewHolder {
