@@ -2,6 +2,7 @@ package com.sebduczmal.goshopping.current;
 
 import com.sebduczmal.goshopping.BasePresenter;
 import com.sebduczmal.goshopping.current.list.CurrentListAdapter;
+import com.sebduczmal.goshopping.data.Db;
 import com.sebduczmal.goshopping.model.ShoppingList;
 import com.sebduczmal.goshopping.model.ShoppingListsItem;
 import com.squareup.sqlbrite2.BriteDatabase;
@@ -22,8 +23,8 @@ public class CurrentListPresenter extends BasePresenter<CurrentListView> {
 
     public void loadShoppingLists(CurrentListAdapter adapter, boolean archived) {
         view().onLoadingShoppingListsStarted();
-        shoppingListsDisposable = db.createQuery(ShoppingListsItem.TABLES, ShoppingListsItem
-                .getQuery(archived))
+        int whereClauseValue = archived ? Db.BOOLEAN_TRUE : Db.BOOLEAN_FALSE;
+        shoppingListsDisposable = db.createQuery(ShoppingListsItem.TABLES, ShoppingListsItem.QUERY, String.valueOf(whereClauseValue))
                 .mapToList(ShoppingListsItem.MAPPER)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(adapter);
