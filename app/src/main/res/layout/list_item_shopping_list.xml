@@ -27,39 +27,63 @@
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
+        android:gravity="center_vertical"
         android:onClick="@{() -> onShoppingListClickListener.onShoppingListClick(model)}"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="@dimen/list_item_padding">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
+                style="@style/ListItemTitleText"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="@{model.name}"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{String.valueOf(model.itemCount())}"/>
-
-            <ImageView
+            <FrameLayout
                 android:id="@+id/button_archive_item"
                 android:layout_width="@dimen/button_archive_size"
                 android:layout_height="@dimen/button_archive_size"
                 android:clickable="true"
                 android:onClick="@{() -> onArchiveButtonClickListener.onArchived(model)}"
-                android:src="@drawable/remove_icon"
-                android:visibility="@{model.archived() ? View.GONE : View.VISIBLE}"/>
+                android:visibility="@{model.archived() ? View.GONE : View.VISIBLE}">
+
+                <ImageView
+                    android:layout_width="@dimen/archive_icon_size"
+                    android:layout_height="@dimen/archive_icon_size"
+                    android:layout_gravity="center"
+                    android:src="@drawable/remove_icon"/>
+            </FrameLayout>
 
         </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{model.date()}"/>
+            android:layout_marginTop="@dimen/list_item_vertical_margin"
+            android:orientation="horizontal">
 
+            <TextView
+                style="@style/ListItemSecondaryText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@{model.date()}"/>
+
+            <TextView
+                style="@style/ListItemSecondaryText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/item_count_horizontal_margin"
+                android:layout_marginStart="@dimen/item_count_horizontal_margin"
+                android:text="@{@string/items_count + String.valueOf(model.itemCount())}"/>
+        </LinearLayout>
     </LinearLayout>
+
 </layout>

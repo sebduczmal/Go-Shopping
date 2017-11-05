@@ -4,4 +4,10 @@
     <dimen name="add_icon_width">2dp</dimen>
     <dimen name="remove_item_icon_size">32dp</dimen>
     <dimen name="button_archive_size">32dp</dimen>
+    <dimen name="list_item_padding">16dp</dimen>
+    <dimen name="item_count_horizontal_margin">8dp</dimen>
+    <dimen name="title_text_size">18sp</dimen>
+    <dimen name="secondary_info_text_size">12sp</dimen>
+    <dimen name="list_item_vertical_margin">8dp</dimen>
+    <dimen name="archive_icon_size">16dp</dimen>
 </resources>
