@@ -5,9 +5,11 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.jakewharton.rxbinding2.view.RxView;
 import com.sebduczmal.goshopping.R;
@@ -67,10 +69,17 @@ public class CreateShoppingItemDialog extends DialogFragment {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(o -> {
                     final String itemName = binding.inputItemName.getText().toString();
-                    final long quantity = Long.valueOf(binding.inputQuantity.getText().toString());
+                    final String quantity = binding.inputQuantity.getText().toString();
                     final String unit = binding.inputUnit.getText().toString();
-                    onShoppingItemCreateListener.onShoppingItemCreated(itemName, quantity, unit);
-                    dismiss();
+                    if (!(TextUtils.isEmpty(itemName) || TextUtils.isEmpty(quantity) || TextUtils
+                            .isEmpty(unit))) {
+                        onShoppingItemCreateListener.onShoppingItemCreated(itemName, Long.valueOf
+                                (quantity), unit);
+                        dismiss();
+                    } else {
+                        Toast.makeText(getActivity(), R.string.empty_item_details_warning, Toast
+                                .LENGTH_SHORT).show();
+                    }
                 }));
 
         viewsDisposables.add(RxView.clicks(binding.buttonCancel)

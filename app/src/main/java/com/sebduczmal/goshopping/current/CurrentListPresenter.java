@@ -21,6 +21,7 @@ public class CurrentListPresenter extends BasePresenter<CurrentListView> {
 
     public void loadShoppingLists(CurrentListAdapter adapter, boolean archived) {
         view().onLoadingShoppingListsStarted();
+        disposables.clear();
         int whereClauseValue = archived ? Db.BOOLEAN_TRUE : Db.BOOLEAN_FALSE;
         disposables.add(db.createQuery(ShoppingListsItem.TABLES, ShoppingListsItem
                 .QUERY, String.valueOf(whereClauseValue))
