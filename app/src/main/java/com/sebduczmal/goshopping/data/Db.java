@@ -2,6 +2,9 @@ package com.sebduczmal.goshopping.data;
 
 import android.database.Cursor;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public final class Db {
     public static final int BOOLEAN_FALSE = 0;
     public static final int BOOLEAN_TRUE = 1;
@@ -20,6 +23,13 @@ public final class Db {
 
     public static int getInt(Cursor cursor, String columnName) {
         return cursor.getInt(cursor.getColumnIndexOrThrow(columnName));
+    }
+
+    public static String getDate(Cursor cursor, String columnName) {
+        long timestamp = cursor.getLong(cursor.getColumnIndexOrThrow(columnName));
+        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm");
+        final Date date = new Date(timestamp);
+        return simpleDateFormat.format(date);
     }
 
     private Db() {
