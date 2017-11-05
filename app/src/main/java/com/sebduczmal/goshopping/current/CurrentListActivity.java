@@ -70,7 +70,7 @@ public class CurrentListActivity extends BaseActivity implements CurrentListView
 
     @Override
     public void toggleAddButtonVisibility(boolean archived) {
-        binding.buttonAddList.setVisibility(archived ? View.INVISIBLE : View.VISIBLE);
+        binding.buttonAddList.setVisibility(archived ? View.GONE : View.VISIBLE);
     }
 
     @Override

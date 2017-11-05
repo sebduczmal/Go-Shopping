@@ -39,7 +39,7 @@ public abstract class BasePresenter<View> {
 
     @CallSuper
     public void detachView() {
-        disposables.dispose();
+        disposables.clear();
         view = null;
     }
 }

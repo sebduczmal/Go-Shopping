@@ -8,14 +8,12 @@ import com.sebduczmal.goshopping.model.ShoppingListsItem;
 import com.squareup.sqlbrite2.BriteDatabase;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import timber.log.Timber;
 
 
 public class CurrentListPresenter extends BasePresenter<CurrentListView> {
 
     private final BriteDatabase db;
-    private Disposable shoppingListsDisposable;
 
     public CurrentListPresenter(BriteDatabase db) {
         this.db = db;
@@ -24,12 +22,11 @@ public class CurrentListPresenter extends BasePresenter<CurrentListView> {
     public void loadShoppingLists(CurrentListAdapter adapter, boolean archived) {
         view().onLoadingShoppingListsStarted();
         int whereClauseValue = archived ? Db.BOOLEAN_TRUE : Db.BOOLEAN_FALSE;
-        shoppingListsDisposable = db.createQuery(ShoppingListsItem.TABLES, ShoppingListsItem
+        disposables.add(db.createQuery(ShoppingListsItem.TABLES, ShoppingListsItem
                 .QUERY, String.valueOf(whereClauseValue))
                 .mapToList(ShoppingListsItem.MAPPER)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(adapter);
-        disposables.add(shoppingListsDisposable);
+                .subscribe(adapter));
         view().toggleAddButtonVisibility(archived);
         view().onLoadingShoppingListsFinished();
     }
