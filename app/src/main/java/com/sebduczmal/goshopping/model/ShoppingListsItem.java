@@ -28,7 +28,8 @@ public abstract class ShoppingListsItem implements Parcelable {
             + " FROM " + ShoppingList.TABLE + " AS " + ALIAS_LIST
             + " LEFT OUTER JOIN " + ShoppingItem.TABLE + " AS " + ALIAS_ITEM + " ON " + LIST_ID +
             " = " + ITEM_LIST_ID
-            + " GROUP BY " + LIST_ID;
+            + " GROUP BY " + LIST_ID
+            + " ORDER BY " + ShoppingList.DATE + " DESC";
 
     public abstract long id();
 

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 
 import com.sebduczmal.goshopping.BaseActivity;
 import com.sebduczmal.goshopping.R;
@@ -12,15 +13,19 @@ import com.sebduczmal.goshopping.common.Constants;
 import com.sebduczmal.goshopping.databinding.ActivityShoppingListDetailsBinding;
 import com.sebduczmal.goshopping.details.di.DaggerShoppingListDetailsComponent;
 import com.sebduczmal.goshopping.details.di.ShoppingListDetailsComponent;
-import com.sebduczmal.goshopping.model.ShoppingList;
+import com.sebduczmal.goshopping.details.list.OnItemClickListener;
+import com.sebduczmal.goshopping.details.list.ShoppingListDetailsAdapter;
+import com.sebduczmal.goshopping.model.ShoppingItem;
 
 import javax.inject.Inject;
 
-public class ShoppingListDetailsActivity extends BaseActivity implements ShoppingListDetailsView {
+public class ShoppingListDetailsActivity extends BaseActivity implements ShoppingListDetailsView,
+        OnItemClickListener {
 
     private static final String EXTRA_SHOPPING_LIST_ID = "extra_shopping_list_id";
 
     @Inject protected ShoppingListDetailsPresenter shoppingListDetailsPresenter;
+    private ShoppingListDetailsAdapter shoppingListDetailsAdapter;
     private ActivityShoppingListDetailsBinding binding;
 
     public static Intent forShoppingListId(Activity callingActivity, long shoppingListId) {
@@ -34,6 +39,7 @@ public class ShoppingListDetailsActivity extends BaseActivity implements Shoppin
         super.onCreate(savedInstanceState);
         injectDependencies();
         binding = DataBindingUtil.setContentView(this, R.layout.activity_shopping_list_details);
+        setupItemsList();
     }
 
     private void injectDependencies() {
@@ -58,15 +64,41 @@ public class ShoppingListDetailsActivity extends BaseActivity implements Shoppin
     }
 
     @Override
-    public void showShoppingListDetails(ShoppingList shoppingList) {
-        binding.setModel(shoppingList);
+    public void onShoppingItemClick(ShoppingItem shoppingItem) {
+        shoppingListDetailsPresenter.markItemPurchased(shoppingItem);
+    }
+
+    @Override
+    public void setDetailsTitle(String title) {
+        setTitle(title);
+    }
+
+    @Override
+    public void onLoadingShoppingListsStarted() {
+        showProgressDialog(R.string.loading_items);
+    }
+
+    @Override
+    public void onLoadingShoppingListsFinished() {
+        hideProgressDialog();
+    }
+
+    private void setupItemsList() {
+        shoppingListDetailsAdapter = new ShoppingListDetailsAdapter(this);
+        shoppingListDetailsAdapter.setOnItemClickListener(this);
+
+        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,
+                LinearLayoutManager.VERTICAL, false);
+
+        binding.recyclerViewItems.setLayoutManager(linearLayoutManager);
+        binding.recyclerViewItems.setAdapter(shoppingListDetailsAdapter);
     }
 
     private void loadShoppingListDetailsIfNeeded() {
         final Intent startingIntent = getIntent();
         if (startingIntent != null && startingIntent.hasExtra(EXTRA_SHOPPING_LIST_ID)) {
-            shoppingListDetailsPresenter.loadShoppingListDetails(startingIntent.getLongExtra
-                    (EXTRA_SHOPPING_LIST_ID, Constants.NO_VALUE));
+            shoppingListDetailsPresenter.loadShoppingListDetails(shoppingListDetailsAdapter,
+                    startingIntent.getLongExtra(EXTRA_SHOPPING_LIST_ID, Constants.NO_VALUE));
         }
     }
 }

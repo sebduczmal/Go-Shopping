@@ -4,6 +4,7 @@ import com.sebduczmal.goshopping.common.di.ApplicationComponent;
 import com.sebduczmal.goshopping.common.di.PerActivity;
 import com.sebduczmal.goshopping.details.ShoppingListDetailsActivity;
 import com.sebduczmal.goshopping.details.ShoppingListDetailsPresenter;
+import com.squareup.sqlbrite2.BriteDatabase;
 
 import dagger.Component;
 import dagger.Module;
@@ -20,8 +21,8 @@ public interface ShoppingListDetailsComponent {
     class ShoppingListDetailsModule {
 
         @Provides
-        public ShoppingListDetailsPresenter provideShoppingListDetailsPresenter() {
-            return new ShoppingListDetailsPresenter();
+        public ShoppingListDetailsPresenter provideShoppingListDetailsPresenter(BriteDatabase db) {
+            return new ShoppingListDetailsPresenter(db);
         }
     }
 }

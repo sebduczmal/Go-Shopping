@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:ignore="RtlHardcoded">
+
+    <data>
+
+        <variable
+            name="model"
+            type="com.sebduczmal.goshopping.model.ShoppingItem"/>
+
+        <variable
+            name="onShoppingItemClickListener"
+            type="com.sebduczmal.goshopping.details.list.OnItemClickListener"/>
+    </data>
+
+    <LinearLayout
+        android:id="@+id/list_shopping_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:onClick="@{() -> onShoppingItemClickListener.onShoppingItemClick(model)}"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{model.name()}"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{String.valueOf(model.quantity())}"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{model.unit()}"/>
+
+    </LinearLayout>
+
+</layout>

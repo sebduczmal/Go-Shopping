@@ -17,8 +17,6 @@ import com.sebduczmal.goshopping.databinding.ActivityCurrentListBinding;
 import com.sebduczmal.goshopping.details.ShoppingListDetailsActivity;
 import com.sebduczmal.goshopping.model.ShoppingListsItem;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import timber.log.Timber;
@@ -37,7 +35,7 @@ public class CurrentListActivity extends BaseActivity implements CurrentListView
         injectDependencies();
         binding = DataBindingUtil.setContentView(this, R.layout.activity_current_list);
         setupShoppingLists();
-        steupViews();
+        setupViews();
     }
 
     private void injectDependencies() {
@@ -58,12 +56,6 @@ public class CurrentListActivity extends BaseActivity implements CurrentListView
     protected void onStop() {
         currentListPresenter.detachView();
         super.onStop();
-    }
-
-    @Override
-    public void showCurrentShoppingLists(List<ShoppingListsItem> shoppingLists) {
-        currentListAdapter.updateShoppingLists(shoppingLists);
-        currentListAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -92,7 +84,7 @@ public class CurrentListActivity extends BaseActivity implements CurrentListView
         binding.recyclerViewCurrent.setAdapter(currentListAdapter);
     }
 
-    private void steupViews() {
+    private void setupViews() {
         binding.buttonAddList.setOnClickListener(view -> {
             CreateShoppingListDialog createShoppingListDialog = new CreateShoppingListDialog();
             createShoppingListDialog.show(getSupportFragmentManager(), CreateShoppingListDialog
