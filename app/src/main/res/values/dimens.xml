@@ -14,4 +14,5 @@
     <dimen name="input_margin_top">16dp</dimen>
     <dimen name="dialog_buttons_margin_top">32dp</dimen>
     <dimen name="dialog_button_size">14sp</dimen>
+    <dimen name="remove_drawable_width">2dp</dimen>
 </resources>

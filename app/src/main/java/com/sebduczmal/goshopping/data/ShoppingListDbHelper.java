@@ -41,62 +41,9 @@ public class ShoppingListDbHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_LIST);
         db.execSQL(CREATE_ITEM);
         db.execSQL(CREATE_ITEM_LIST_ID_INDEX);
-        generateStubData(db);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
-    }
-
-    private void generateStubData(SQLiteDatabase db) {
-        long groceryShoppingListId = db.insert(ShoppingList.TABLE, null,
-                new ShoppingList.Builder()
-                        .name("Spaghetti")
-                        .date(System.currentTimeMillis()).build());
-        db.insert(ShoppingItem.TABLE, null, new ShoppingItem.Builder()
-                .listId(groceryShoppingListId)
-                .name("Noodles")
-                .quantity(2)
-                .unit("packages").build());
-        db.insert(ShoppingItem.TABLE, null, new ShoppingItem.Builder()
-                .listId(groceryShoppingListId)
-                .name("Tomatoes")
-                .quantity(1)
-                .unit("kg").build());
-        db.insert(ShoppingItem.TABLE, null, new ShoppingItem.Builder()
-                .listId(groceryShoppingListId)
-                .name("Mozzarella")
-                .quantity(200)
-                .unit("grams").build());
-
-        long cleaningShoppingListId = db.insert(ShoppingList.TABLE, null,
-                new ShoppingList.Builder()
-                        .name("Cleaning house")
-                        .date(System.currentTimeMillis() - 10000L).build());
-        db.insert(ShoppingItem.TABLE, null, new ShoppingItem.Builder()
-                .listId(cleaningShoppingListId)
-                .name("Soap")
-                .quantity(4)
-                .unit("packages").build());
-        db.insert(ShoppingItem.TABLE, null, new ShoppingItem.Builder()
-                .listId(cleaningShoppingListId)
-                .name("Air refresher")
-                .quantity(1)
-                .unit("package").build());
-
-        long generalShoppingListId = db.insert(ShoppingList.TABLE, null,
-                new ShoppingList.Builder()
-                        .name("General")
-                        .date(System.currentTimeMillis() - 1000L).build());
-        db.insert(ShoppingItem.TABLE, null, new ShoppingItem.Builder()
-                .listId(generalShoppingListId)
-                .name("Deodorant")
-                .quantity(1)
-                .unit("package").build());
-        db.insert(ShoppingItem.TABLE, null, new ShoppingItem.Builder()
-                .listId(generalShoppingListId)
-                .name("Cigarettes")
-                .quantity(2)
-                .unit("packages").build());
     }
 }

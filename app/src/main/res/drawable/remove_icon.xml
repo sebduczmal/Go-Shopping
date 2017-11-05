@@ -1,10 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
-        <shape android:shape="line">
-            <stroke
-                android:width="@dimen/add_icon_width"
-                android:color="@color/colorAccent"/>
-        </shape>
+        <rotate
+            android:fromDegrees="45"
+            android:pivotX="50%"
+            android:pivotY="50%"
+            android:toDegrees="-45"
+            >
+            <shape android:shape="line">
+                <stroke
+                    android:width="@dimen/remove_drawable_width"
+                    android:color="@color/colorAccent"
+                    />
+            </shape>
+        </rotate>
+    </item>
+    <item>
+        <rotate
+            android:fromDegrees="-45"
+            android:pivotX="50%"
+            android:pivotY="50%"
+            android:toDegrees="45"
+            >
+            <shape android:shape="line">
+                <stroke
+                    android:width="@dimen/remove_drawable_width"
+                    android:color="@color/colorAccent"
+                    />
+            </shape>
+        </rotate>
     </item>
 </layer-list>
