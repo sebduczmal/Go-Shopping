@@ -27,7 +27,6 @@ public class CurrentListPresenter extends BasePresenter<CurrentListView> {
                 .mapToList(ShoppingListsItem.MAPPER)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(adapter));
-        view().toggleAddButtonVisibility(archived);
         view().onLoadingShoppingListsFinished(archived);
     }
 

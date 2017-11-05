@@ -6,10 +6,6 @@
         <import type="android.view.View"/>
 
         <variable
-            name="archived"
-            type="boolean"/>
-
-        <variable
             name="presenter"
             type="com.sebduczmal.goshopping.current.CurrentListPresenter"/>
 
@@ -44,6 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
+            android:onClick="@{() -> presenter.loadShoppingLists(adapter, true)}"
             android:text="@string/button_show_archived"/>
 
         <Button
@@ -51,6 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
+            android:onClick="@{() -> presenter.loadShoppingLists(adapter, false)}"
             android:text="@string/button_show_current"/>
 
     </android.support.design.widget.CoordinatorLayout>

@@ -82,11 +82,7 @@ public class CurrentListActivity extends BaseActivity implements CurrentListView
     public void onLoadingShoppingListsFinished(boolean loadedArchived) {
         hideProgressDialog();
         displayArchived = loadedArchived;
-    }
-
-    @Override
-    public void toggleAddButtonVisibility(boolean archived) {
-        binding.buttonAddList.setVisibility(archived ? View.GONE : View.VISIBLE);
+        binding.buttonAddList.setVisibility(loadedArchived ? View.GONE : View.VISIBLE);
     }
 
     @Override
@@ -113,15 +109,11 @@ public class CurrentListActivity extends BaseActivity implements CurrentListView
     }
 
     private void setupViews() {
+        binding.setAdapter(currentListAdapter);
+        binding.setPresenter(currentListPresenter);
         binding.buttonAddList.setOnClickListener(view -> {
             CreateShoppingListDialog createShoppingListDialog = new CreateShoppingListDialog();
             createShoppingListDialog.show(getSupportFragmentManager(), "create-list");
-        });
-        binding.buttonShowArchived.setOnClickListener(view -> {
-            currentListPresenter.loadShoppingLists(currentListAdapter, true);
-        });
-        binding.buttonShowCurrent.setOnClickListener(view -> {
-            currentListPresenter.loadShoppingLists(currentListAdapter, false);
         });
     }
 

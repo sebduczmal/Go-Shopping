@@ -5,8 +5,6 @@ import android.content.Context;
 import com.sebduczmal.goshopping.data.DbModule;
 import com.squareup.sqlbrite2.BriteDatabase;
 
-import javax.inject.Singleton;
-
 import dagger.Component;
 import dagger.Module;
 import dagger.Provides;
