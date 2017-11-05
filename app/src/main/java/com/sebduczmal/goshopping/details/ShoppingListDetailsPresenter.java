@@ -53,4 +53,13 @@ public class ShoppingListDetailsPresenter extends BasePresenter<ShoppingListDeta
                 String.valueOf(shoppingItem.id()));
         Timber.d("%s removed from database", shoppingItem.name());
     }
+
+    public void createShoppingItem(String name, long quantity, String unit, long shoppingListId) {
+        db.insert(ShoppingItem.TABLE, new ShoppingItem.Builder()
+                .listId(shoppingListId)
+                .name(name)
+                .quantity(quantity)
+                .unit(unit).build());
+        Timber.d("$s shopping item created");
+    }
 }

@@ -19,8 +19,6 @@ import com.sebduczmal.goshopping.model.ShoppingListsItem;
 
 import javax.inject.Inject;
 
-import timber.log.Timber;
-
 
 public class CurrentListActivity extends BaseActivity implements CurrentListView,
         OnShoppingListClickListener, OnShoppingListCreateListener {
@@ -87,14 +85,12 @@ public class CurrentListActivity extends BaseActivity implements CurrentListView
     private void setupViews() {
         binding.buttonAddList.setOnClickListener(view -> {
             CreateShoppingListDialog createShoppingListDialog = new CreateShoppingListDialog();
-            createShoppingListDialog.show(getSupportFragmentManager(), CreateShoppingListDialog
-                    .TAG);
+            createShoppingListDialog.show(getSupportFragmentManager(), "create-list");
         });
     }
 
     @Override
     public void onShoppingListCreated(String shoppingListName) {
-        Timber.d("Shopping list created: %s", shoppingListName);
         currentListPresenter.createShoppingList(shoppingListName);
     }
 }

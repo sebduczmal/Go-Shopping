@@ -13,6 +13,8 @@ import com.sebduczmal.goshopping.common.Constants;
 import com.sebduczmal.goshopping.databinding.ActivityShoppingListDetailsBinding;
 import com.sebduczmal.goshopping.details.di.DaggerShoppingListDetailsComponent;
 import com.sebduczmal.goshopping.details.di.ShoppingListDetailsComponent;
+import com.sebduczmal.goshopping.details.dialog.CreateShoppingItemDialog;
+import com.sebduczmal.goshopping.details.dialog.OnShoppingItemCreateListener;
 import com.sebduczmal.goshopping.details.list.OnItemClickListener;
 import com.sebduczmal.goshopping.details.list.OnRemoveItemClickListener;
 import com.sebduczmal.goshopping.details.list.ShoppingListDetailsAdapter;
@@ -21,13 +23,14 @@ import com.sebduczmal.goshopping.model.ShoppingItem;
 import javax.inject.Inject;
 
 public class ShoppingListDetailsActivity extends BaseActivity implements ShoppingListDetailsView,
-        OnItemClickListener, OnRemoveItemClickListener {
+        OnItemClickListener, OnRemoveItemClickListener, OnShoppingItemCreateListener {
 
     private static final String EXTRA_SHOPPING_LIST_ID = "extra_shopping_list_id";
 
     @Inject protected ShoppingListDetailsPresenter shoppingListDetailsPresenter;
     private ShoppingListDetailsAdapter shoppingListDetailsAdapter;
     private ActivityShoppingListDetailsBinding binding;
+    private long shoppingListId;
 
     public static Intent forShoppingListId(Activity callingActivity, long shoppingListId) {
         final Intent result = new Intent(callingActivity, ShoppingListDetailsActivity.class);
@@ -41,6 +44,7 @@ public class ShoppingListDetailsActivity extends BaseActivity implements Shoppin
         injectDependencies();
         binding = DataBindingUtil.setContentView(this, R.layout.activity_shopping_list_details);
         setupItemsList();
+        setupViews();
     }
 
     private void injectDependencies() {
@@ -104,8 +108,22 @@ public class ShoppingListDetailsActivity extends BaseActivity implements Shoppin
     private void loadShoppingListDetailsIfNeeded() {
         final Intent startingIntent = getIntent();
         if (startingIntent != null && startingIntent.hasExtra(EXTRA_SHOPPING_LIST_ID)) {
+            shoppingListId = startingIntent.getLongExtra(EXTRA_SHOPPING_LIST_ID, Constants
+                    .NO_VALUE);
             shoppingListDetailsPresenter.loadShoppingListDetails(shoppingListDetailsAdapter,
-                    startingIntent.getLongExtra(EXTRA_SHOPPING_LIST_ID, Constants.NO_VALUE));
+                    shoppingListId);
         }
+    }
+
+    private void setupViews() {
+        binding.buttonAddItem.setOnClickListener(view -> {
+            CreateShoppingItemDialog createShoppingItemDialog = new CreateShoppingItemDialog();
+            createShoppingItemDialog.show(getSupportFragmentManager(), "create-item");
+        });
+    }
+
+    @Override
+    public void onShoppingItemCreated(String name, long quantity, String unit) {
+        shoppingListDetailsPresenter.createShoppingItem(name, quantity, unit, shoppingListId);
     }
 }
