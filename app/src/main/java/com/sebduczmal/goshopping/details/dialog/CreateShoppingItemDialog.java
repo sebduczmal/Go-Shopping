@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.jakewharton.rxbinding2.view.RxView;
@@ -66,13 +67,20 @@ public class CreateShoppingItemDialog extends DialogFragment {
      * Example of using Rx for views
      */
     private void setupViews() {
+        final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                getActivity(),
+                R.array.units_array,
+                android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        binding.inputUnit.setAdapter(adapter);
+
         viewsDisposables.add(RxView.clicks(binding.buttonOk)
                 .debounce(200, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(o -> {
                     final String itemName = binding.inputItemName.getText().toString();
                     final String quantity = binding.inputQuantity.getText().toString();
-                    final String unit = binding.inputUnit.getText().toString();
+                    final String unit = binding.inputUnit.getSelectedItem().toString();
                     if (!(TextUtils.isEmpty(itemName) || TextUtils.isEmpty(quantity) || TextUtils
                             .isEmpty(unit))) {
                         onShoppingItemCreateListener.onShoppingItemCreated(itemName, Long.valueOf

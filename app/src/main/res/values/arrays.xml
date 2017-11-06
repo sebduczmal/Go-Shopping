@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="units_array">
+        <item>pcs</item>
+        <item>bottles</item>
+        <item>grams</item>
+        <item>kilos</item>
+        <item>liters</item>
+        <item>packs</item>
+    </string-array>
+</resources>
