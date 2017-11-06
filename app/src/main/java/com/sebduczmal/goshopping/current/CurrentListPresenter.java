@@ -3,6 +3,7 @@ package com.sebduczmal.goshopping.current;
 import com.sebduczmal.goshopping.BasePresenter;
 import com.sebduczmal.goshopping.current.list.CurrentListAdapter;
 import com.sebduczmal.goshopping.data.Db;
+import com.sebduczmal.goshopping.model.ShoppingItem;
 import com.sebduczmal.goshopping.model.ShoppingList;
 import com.sebduczmal.goshopping.model.ShoppingListsItem;
 import com.squareup.sqlbrite2.BriteDatabase;
@@ -47,5 +48,10 @@ public class CurrentListPresenter extends BasePresenter<CurrentListView> {
         db.update(ShoppingList.TABLE, new ShoppingList.Builder().archived(true).build(),
                 ShoppingList.ID + " = ?", String.valueOf(shoppingList.id()));
         Timber.d("%s list archived", shoppingList.name());
+    }
+
+    public void deleteShoppingLists() {
+        db.delete(ShoppingList.TABLE,null);
+        db.delete(ShoppingItem.TABLE,null);
     }
 }

@@ -2,10 +2,16 @@ package com.sebduczmal.goshopping.current;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.sebduczmal.goshopping.BaseActivity;
 import com.sebduczmal.goshopping.R;
@@ -22,9 +28,12 @@ import com.sebduczmal.goshopping.model.ShoppingListsItem;
 
 import javax.inject.Inject;
 
+import timber.log.Timber;
+
 
 public class CurrentListActivity extends BaseActivity implements CurrentListView,
-        OnShoppingListClickListener, OnShoppingListCreateListener, OnArchiveButtonClickListener {
+        OnShoppingListClickListener, OnShoppingListCreateListener, OnArchiveButtonClickListener,
+        NavigationView.OnNavigationItemSelectedListener {
 
     private static final String BUNDLE_KEY_DISPLAY_ARCHIVED = "display_archived_key";
 
@@ -40,6 +49,7 @@ public class CurrentListActivity extends BaseActivity implements CurrentListView
         binding = DataBindingUtil.setContentView(this, R.layout.activity_current_list);
         setupShoppingLists();
         setupViews();
+        setupDrawer();
     }
 
     private void injectDependencies() {
@@ -65,6 +75,7 @@ public class CurrentListActivity extends BaseActivity implements CurrentListView
     protected void onResume() {
         super.onResume();
         currentListPresenter.attachView(this);
+        setActivityTitle();
         currentListPresenter.loadShoppingLists(currentListAdapter, displayArchived ? true : false);
     }
 
@@ -72,6 +83,15 @@ public class CurrentListActivity extends BaseActivity implements CurrentListView
     protected void onStop() {
         currentListPresenter.detachView();
         super.onStop();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            binding.drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override
@@ -84,6 +104,7 @@ public class CurrentListActivity extends BaseActivity implements CurrentListView
         hideProgressDialog();
         displayArchived = loadedArchived;
         binding.buttonAddList.setVisibility(loadedArchived ? View.GONE : View.VISIBLE);
+        setActivityTitle();
     }
 
     @Override
@@ -95,6 +116,28 @@ public class CurrentListActivity extends BaseActivity implements CurrentListView
     @Override
     public void onArchived(ShoppingListsItem shoppingList) {
         currentListPresenter.archiveShoppingList(shoppingList);
+        Toast.makeText(this, String.format(getString(R.string.list_archived), shoppingList.name()
+        ), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.nav_current:
+                currentListPresenter.loadShoppingLists(currentListAdapter, false);
+                break;
+            case R.id.nav_archived:
+                currentListPresenter.loadShoppingLists(currentListAdapter, true);
+                break;
+            case R.id.nav_clear_all:
+                currentListPresenter.deleteShoppingLists();
+                break;
+            default:
+                Timber.d("No action handled");
+        }
+        binding.drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
     }
 
     private void setupShoppingLists() {
@@ -112,12 +155,26 @@ public class CurrentListActivity extends BaseActivity implements CurrentListView
     }
 
     private void setupViews() {
+        setSupportActionBar(binding.toolbar);
         binding.setAdapter(currentListAdapter);
         binding.setPresenter(currentListPresenter);
         binding.buttonAddList.setOnClickListener(view -> {
             CreateShoppingListDialog createShoppingListDialog = new CreateShoppingListDialog();
             createShoppingListDialog.show(getSupportFragmentManager(), "create-list");
         });
+    }
+
+    private void setupDrawer() {
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, binding.drawerLayout, binding.toolbar, R.string.navigation_drawer_open, R
+                .string.navigation_drawer_close);
+        binding.drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+        binding.navView.setNavigationItemSelectedListener(this);
+    }
+
+    private void setActivityTitle() {
+        setTitle(displayArchived ? R.string.archived : R.string.current);
     }
 
     @Override
