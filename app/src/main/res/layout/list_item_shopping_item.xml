@@ -85,6 +85,13 @@
                 android:layout_width="@dimen/archive_icon_size"
                 android:layout_height="@dimen/archive_icon_size"
                 android:layout_gravity="center"
+                android:src="@drawable/ic_action_check"
+                android:visibility="@{model.purchased() ? View.VISIBLE : View.GONE}"/>
+
+            <ImageView
+                android:layout_width="@dimen/archive_icon_size"
+                android:layout_height="@dimen/archive_icon_size"
+                android:layout_gravity="center"
                 android:src="@drawable/remove_icon"
                 android:visibility="@{archived || model.purchased() ? View.GONE : View.VISIBLE}"/>
 
