@@ -9,6 +9,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -41,6 +42,7 @@ public class CurrentListActivity extends BaseActivity implements CurrentListView
     private CurrentListAdapter currentListAdapter;
     private ActivityCurrentListBinding binding;
     private boolean displayArchived;
+    private boolean ascending;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,6 +62,22 @@ public class CurrentListActivity extends BaseActivity implements CurrentListView
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_list_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_action_sort) {
+            currentListPresenter.loadShoppingLists(currentListAdapter, displayArchived, ascending);
+            ascending = !ascending;
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putBoolean(BUNDLE_KEY_DISPLAY_ARCHIVED, displayArchived);
         super.onSaveInstanceState(outState);
@@ -76,7 +94,8 @@ public class CurrentListActivity extends BaseActivity implements CurrentListView
         super.onResume();
         currentListPresenter.attachView(this);
         setActivityTitle();
-        currentListPresenter.loadShoppingLists(currentListAdapter, displayArchived ? true : false);
+        currentListPresenter.loadShoppingLists(currentListAdapter, displayArchived ? true :
+                false, ascending);
     }
 
     @Override
@@ -125,10 +144,10 @@ public class CurrentListActivity extends BaseActivity implements CurrentListView
         int id = item.getItemId();
         switch (id) {
             case R.id.nav_current:
-                currentListPresenter.loadShoppingLists(currentListAdapter, false);
+                currentListPresenter.loadShoppingLists(currentListAdapter, false, ascending);
                 break;
             case R.id.nav_archived:
-                currentListPresenter.loadShoppingLists(currentListAdapter, true);
+                currentListPresenter.loadShoppingLists(currentListAdapter, true, ascending);
                 break;
             case R.id.nav_clear_all:
                 currentListPresenter.deleteShoppingLists();

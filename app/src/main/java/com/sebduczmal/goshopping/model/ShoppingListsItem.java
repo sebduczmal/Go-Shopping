@@ -13,6 +13,9 @@ import io.reactivex.functions.Function;
 
 @AutoValue
 public abstract class ShoppingListsItem implements Parcelable {
+    private static final String ASCENDING = "ASC";
+    private static final String DESCENDING = "DESC";
+
     private static String ALIAS_LIST = "list";
     private static String ALIAS_ITEM = "item";
 
@@ -33,7 +36,7 @@ public abstract class ShoppingListsItem implements Parcelable {
             " = " + ITEM_LIST_ID
             + " WHERE " + LIST_ARCHIVED + " = ?"
             + " GROUP BY " + LIST_ID
-            + " ORDER BY " + LIST_DATE + " DESC";
+            + " ORDER BY " + LIST_DATE + " %s";
 
     public abstract long id();
 
@@ -44,6 +47,10 @@ public abstract class ShoppingListsItem implements Parcelable {
     public abstract boolean archived();
 
     public abstract String date();
+
+    public static String getQuery(boolean ascending) {
+        return String.format(QUERY, ascending ? ASCENDING : DESCENDING);
+    }
 
     public static Function<Cursor, ShoppingListsItem> MAPPER = cursor -> {
         long id = Db.getLong(cursor, ShoppingList.ID);

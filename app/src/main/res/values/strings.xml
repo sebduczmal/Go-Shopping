@@ -28,4 +28,5 @@
     <string name="archived">Archived lists</string>
     <string name="current">Current lists</string>
     <string name="list_archived">Shopping list %s archived</string>
+    <string name="action_sort">Sort shopping lists</string>
 </resources>
