@@ -67,7 +67,7 @@ public class CreateShoppingItemDialog extends DialogFragment {
      */
     private void setupViews() {
         viewsDisposables.add(RxView.clicks(binding.buttonOk)
-                .debounce(500, TimeUnit.MILLISECONDS)
+                .debounce(200, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(o -> {
                     final String itemName = binding.inputItemName.getText().toString();
@@ -85,7 +85,7 @@ public class CreateShoppingItemDialog extends DialogFragment {
                 }));
 
         viewsDisposables.add(RxView.clicks(binding.buttonCancel)
-                .debounce(500, TimeUnit.MILLISECONDS)
+                .debounce(200, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(o -> dismiss()));
     }
