@@ -78,7 +78,7 @@
         <FrameLayout
             android:layout_width="@dimen/button_archive_size"
             android:layout_height="@dimen/button_archive_size"
-            android:clickable="true"
+            android:clickable="@{archived || model.purchased() ? false : true}"
             android:onClick="@{() -> onRemoveShoppingItemClickListener.onRemoveItemClick(model)}">
 
             <ImageView
